@@ -3,6 +3,19 @@ import random
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel
 from PyQt5.QtGui import QPixmap, QTransform, QPainter, QColor
 from PyQt5.QtCore import Qt, QTimer
+import os
+
+def asset_path(filename):
+    if getattr(sys, "frozen", False):
+        base_path = os.path.dirname(sys.executable)
+        internal_path = os.path.join(base_path, "_internal")
+
+        if os.path.isdir(internal_path):
+            base_path = internal_path
+    else:
+        base_path = os.path.dirname(os.path.abspath(__file__))
+
+    return os.path.join(base_path, "pet", filename)
 
 class DesktopPet(QWidget):
     def __init__ (self):
@@ -15,45 +28,46 @@ class DesktopPet(QWidget):
         self.frame_index = 0
         self.delay = 0
         self.has_ball = False
+        self.has_hung_at_rod = False
         self.idle_frames = [
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Idle 1.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Idle 2.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Idle 3.png")]
+            QPixmap(asset_path("Robot Monkey Idle 1.png")),
+            QPixmap(asset_path("Robot Monkey Idle 2.png")),
+            QPixmap(asset_path("Robot Monkey Idle 3.png"))]
         self.walk_frames = [
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Walk 1.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Walk 2.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Walk 3.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Walk 4.png")]
+            QPixmap(asset_path("Robot Monkey Walk 1.png")),
+            QPixmap(asset_path("Robot Monkey Walk 2.png")),
+            QPixmap(asset_path("Robot Monkey Walk 3.png")),
+            QPixmap(asset_path("Robot Monkey Walk 4.png"))]
         self.sleep_frames = [
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Sleep 1.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Sleep 2.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Sleep 3.png")]
+            QPixmap(asset_path("Robot Monkey Sleep 1.png")),
+            QPixmap(asset_path("Robot Monkey Sleep 2.png")),
+            QPixmap(asset_path("Robot Monkey Sleep 3.png"))]
         self.happy_frames = [
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Happy 1.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Happy 2.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Happy 3.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Happy 4.png")]
+            QPixmap(asset_path("Robot Monkey Happy 1.png")),
+            QPixmap(asset_path("Robot Monkey Happy 2.png")),
+            QPixmap(asset_path("Robot Monkey Happy 3.png")),
+            QPixmap(asset_path("Robot Monkey Happy 4.png"))]
         self.confused_frames = [
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Confused 1.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Confused 2.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Confused 3.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Confused 4.png")]
+            QPixmap(asset_path("Robot Monkey Confused 1.png")),
+            QPixmap(asset_path("Robot Monkey Confused 2.png")),
+            QPixmap(asset_path("Robot Monkey Confused 3.png")),
+            QPixmap(asset_path("Robot Monkey Confused 4.png"))]
         self.annoyed_frames = [
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Annoyed 1.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Annoyed 2.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Annoyed 3.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Annoyed 4.png")]
+            QPixmap(asset_path("Robot Monkey Annoyed 1.png")),
+            QPixmap(asset_path("Robot Monkey Annoyed 2.png")),
+            QPixmap(asset_path("Robot Monkey Annoyed 3.png")),
+            QPixmap(asset_path("Robot Monkey Annoyed 4.png"))]
         self.holding_ball_frames = [
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Run 1.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Run 2.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Run 3.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Run 4.png")]
+            QPixmap(asset_path("Robot Monkey Run 1.png")),
+            QPixmap(asset_path("Robot Monkey Run 2.png")),
+            QPixmap(asset_path("Robot Monkey Run 3.png")),
+            QPixmap(asset_path("Robot Monkey Run 4.png"))]
         self.sad_frames = [
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Sad 1.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Sad 2.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Sad 3.png"),
-            QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Sad 4.png")]
-        self.hang_frames = [QPixmap("C:/Users/admin/Desktop/pet/Robot Monkey Hang.png")]
+            QPixmap(asset_path("Robot Monkey Sad 1.png")),
+            QPixmap(asset_path("Robot Monkey Sad 2.png")),
+            QPixmap(asset_path("Robot Monkey Sad 3.png")),
+            QPixmap(asset_path("Robot Monkey Sad 4.png"))]
+        self.hang_frames = [QPixmap(asset_path("Robot Monkey Hang.png"))]
         self.click_count = 0
         self.click_timer = QTimer()
         self.click_timer.setSingleShot(True)
@@ -76,7 +90,7 @@ class DesktopPet(QWidget):
         self.resize(250,250)
 
         self.label.setGeometry(0,0,250,250)
-        pixmap=QPixmap("C:/Users/admin/Desktop/Cherry's folder/Robot Monkey Idle 1.png")
+        pixmap=QPixmap("Robot Monkey Idle 1.png")
         self.label.setPixmap(pixmap)
         self.label.setScaledContents(True)
 
@@ -87,9 +101,11 @@ class DesktopPet(QWidget):
     def move_pet(self):
         pos = self.pos()
         screen = QApplication.primaryScreen().availableGeometry()
-
+        if abs(pos.x() - self.rod_x) > self.width():
+            self.has_hung_at_rod = False
         # Check whether the monkey has reached the rod
-        if abs(pos.x() - self.rod_x) <= self.speed:
+        if abs(pos.x() - self.rod_x) <= self.speed and not self.has_hung_at_rod:
+            self.has_hung_at_rod = True
             self.state = "hanging"
             self.state_time = 0
             self.frame_index = 0
@@ -119,6 +135,7 @@ class DesktopPet(QWidget):
         elif self.state == "hanging":
             frames = self.hang_frames
             self.label.setPixmap(self.hang_frames[0])
+            return
 
         elif self.state == "sleeping":
             frames = self.sleep_frames
@@ -184,7 +201,7 @@ class DesktopPet(QWidget):
 
         pixmap = frames[self.frame_index]
 
-        if self.state in ["idle", "walking"] and self.direction == -1:
+        if self.state in ["idle", "walking", "holding_ball"] and self.direction == -1:
             pixmap = pixmap.transformed(QTransform().scale(-1, 1))
 
         self.label.setPixmap(pixmap)
@@ -291,7 +308,7 @@ class DesktopPet(QWidget):
 
         elif self.state == "hanging":
             if self.state_time >= 5:
-                self.state = "idle"
+                self.state = "walking"
                 self.state_time = 0
                 self.frame_index = 0
                 self.delay = 0
@@ -342,12 +359,11 @@ class Ball(QWidget):
             Qt.Tool)
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.label = QLabel(self)
-        self.ball = QPixmap("C:/Users/admin/Desktop/pet/ball.png").copy(497, 497, 254, 254).scaled(
+        self.ball = QPixmap(asset_path("ball.png")).copy(497, 497, 254, 254).scaled(
     60, 60, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         self.label.setPixmap(self.ball)
         self.label.resize(self.ball.size())
         self.resize(self.ball.size())
-        print(self.ball.size())
         self.offset = None
         self.dragging = False
         self.desktop_pet = None
